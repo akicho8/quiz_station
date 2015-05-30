@@ -18,12 +18,13 @@
               = "ヒント: #{mission.category_tag_list}"
       .col-xs-4
         .btn-group.btn-group-justified
-          = link_to("答え", "#", :data => {:confirm => mission.answer_body}, :class => "btn btn-default")
+          = link_to("答え", "#", :data => {:answerbody => mission.answer_body}, :class => "btn btn-default kotae_display")
         / = link_to("答えを見る", polymorphic_path(:missions, :id => mission.id, :with_answer => true), :class => "btn btn-default")
         / = link_to("次のクイズへ", polymorphic_path(:missions, :prev_mission_id => mission.id), :class => "btn btn-default")
-        .btn-group.btn-group-justified
-          = link_to("×", polymorphic_path([:marubatu, mission], :difficult_level_add => 1), :remote => true, :method => :patch, :class => "btn btn-default")
-          = link_to("○", polymorphic_path([:marubatu, mission], :difficult_level_add => -1), :remote => true, :method => :patch, :class => "btn btn-default")
+        p
+          .btn-group.btn-group-justified
+            = link_to("×", polymorphic_path([:marubatu, mission], :difficult_level_add => 1), :remote => true, :method => :patch, :class => "btn btn-default")
+            = link_to("○", polymorphic_path([:marubatu, mission], :difficult_level_add => -1), :remote => true, :method => :patch, :class => "btn btn-default")
 
     / .btn-group.btn-group-justified
     /   = link_to("答え", "#", :data => {:confirm => mission.answer_body}, :class => "btn btn-warning")

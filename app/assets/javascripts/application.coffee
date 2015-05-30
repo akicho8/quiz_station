@@ -15,3 +15,12 @@
 #  require turbolinks
 #= require bootstrap.min
 #= require_tree .
+
+$(document).on "click", ".kotae_display", (e) =>
+  e.preventDefault()
+  e.stopPropagation()
+  e.stopImmediatePropagation()
+  $(e.target).replace_html
+  answerbody = $(e.target).data("answerbody")
+  $(e.target).html(answerbody)
+  # alert $(e.target).data("answerbody")
