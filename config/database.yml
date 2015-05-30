@@ -10,10 +10,6 @@ development:
   <<: *defaults
   database: quiz_station_development
 
-staging:
-  <<: *defaults
-  database: quiz_station_staging
-
 production:
   <<: *defaults
   database: quiz_station_production

@@ -7,17 +7,9 @@ RSpec.describe MissionsController, type: :controller do
     @mission = mission_create
   end
 
-  context "index" do
-    it "index" do
-      get :index
-      assert_response :success
-    end
-
-    it "検索" do
-      get :index, :query => @mission.tag_list, :format => "txt"
-      assert_response :success
-      assert_match /#{@mission.id}.*#{@mission.question_body}.*#{@mission.tag_list}.*#{@mission.answer_body}/m, response.answer_body
-    end
+  it "index" do
+    get :index
+    assert_response :success
   end
 
   it "show" do
