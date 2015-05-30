@@ -1,0 +1,12 @@
+section
+  h2
+    = link_to mission.question_body, mission
+  = mission_answer_body mission.answer_body
+  p
+    = mission_tag_list mission.tag_list
+  p
+    = mission.created_at.strftime("%Y-%m-%d %H:%M")
+    = " "
+    = link_to "編集", [:edit, mission]
+    = " "
+    = link_to "削除", mission, :data => {:confirm => "本当に？"}, :method => :delete
