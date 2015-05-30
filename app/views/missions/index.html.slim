@@ -10,19 +10,20 @@
 - @missions.each do |mission|
   - if mission
     .row
-      .col-xs-8
+      .col-xs-9
         .panel.panel-default
           .panel-body
             = mission.question_body
-            .text-muted
-              = "ヒント: #{mission.category_tag_list}"
-      .col-xs-4
+            / .text-muted
+            /   = "ヒント: #{mission.category_tag_list}"
+      .col-xs-3
         .btn-group.btn-group-justified
-          = link_to("答え", "#", :data => {:answerbody => mission.answer_body}, :class => "btn btn-default kotae_display")
+          = link_to("答", "#", :data => {:answerbody => mission.answer_body}, :class => "btn btn-default kotae_display")
         / = link_to("答えを見る", polymorphic_path(:missions, :id => mission.id, :with_answer => true), :class => "btn btn-default")
         / = link_to("次のクイズへ", polymorphic_path(:missions, :prev_mission_id => mission.id), :class => "btn btn-default")
         p
-          .btn-group.btn-group-justified
+          / .btn-group.btn-group-justified
+          .btn-group-justified
             = link_to("×", polymorphic_path([:marubatu, mission], :difficult_level_add => 1), :remote => true, :method => :patch, :class => "btn btn-default")
             = link_to("○", polymorphic_path([:marubatu, mission], :difficult_level_add => -1), :remote => true, :method => :patch, :class => "btn btn-default")
 
