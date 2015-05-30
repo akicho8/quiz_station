@@ -7,22 +7,35 @@
   /   = link_to("答えを見る", polymorphic_path(:missions, :id => @mission.id, :with_answer => true)) + " "
   /   = link_to("次のクイズへ", polymorphic_path(:missions, :prev_mission_id => @mission.id))
 
-- if @mission
-  .panel.panel-default
-    .panel-body
-      = @mission.question_body
+- @missions.each do |mission|
+  - if mission
+    .row
+      .col-xs-8
+        .panel.panel-default
+          .panel-body
+            = mission.question_body
+            .text-muted
+              = "ヒント: #{mission.category_tag_list}"
+      .col-xs-4
+        .btn-group.btn-group-justified
+          = link_to("答え", "#", :data => {:confirm => mission.answer_body}, :class => "btn btn-default")
+        / = link_to("答えを見る", polymorphic_path(:missions, :id => mission.id, :with_answer => true), :class => "btn btn-default")
+        / = link_to("次のクイズへ", polymorphic_path(:missions, :prev_mission_id => mission.id), :class => "btn btn-default")
+        .btn-group.btn-group-justified
+          = link_to("×", polymorphic_path([:marubatu, mission], :difficult_level_add => 1), :remote => true, :method => :patch, :class => "btn btn-default")
+          = link_to("○", polymorphic_path([:marubatu, mission], :difficult_level_add => -1), :remote => true, :method => :patch, :class => "btn btn-default")
 
-  .btn-group.btn-group-justified
-    = link_to("答え", "#", :data => {:confirm => @mission.answer_body}, :class => "btn btn-warning")
-    = link_to("答えを見る", polymorphic_path(:missions, :id => @mission.id, :with_answer => true), :class => "btn btn-info")
-    = link_to("次のクイズへ", polymorphic_path(:missions, :prev_mission_id => @mission.id), :class => "btn btn-success")
+    / .btn-group.btn-group-justified
+    /   = link_to("答え", "#", :data => {:confirm => mission.answer_body}, :class => "btn btn-warning")
+    /   = link_to("答えを見る", polymorphic_path(:missions, :id => mission.id, :with_answer => true), :class => "btn btn-info")
+    /   = link_to("次のクイズへ", polymorphic_path(:missions, :prev_mission_id => mission.id), :class => "btn btn-success")
 
-  - if params[:with_answer]
-    p
-      .well.well-sm
-        = @mission.answer_body
+    / - if params[:with_answer]
+    /   p
+    /     .well.well-sm
+    /       = mission.answer_body
 
-- if @prev_mission
-  p
-    .well.well-sm
-      = "前の問題の答え: #{@prev_mission.answer_body}"
+  / - if @prev_mission
+  /   p
+  /     .well.well-sm
+  /       = "前の問題の答え: #{@prev_mission.answer_body}"

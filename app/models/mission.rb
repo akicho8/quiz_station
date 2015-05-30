@@ -2,8 +2,12 @@
 
 class Mission < ActiveRecord::Base
   acts_as_taggable
+  acts_as_taggable_on :category_tags
 
   before_validation do
+    self.display_counter ||= 0
+    self.difficult_level ||= 0
+
     if changes.has_key?(:question_body)
       self.question_body = question_body.to_s.strip.presence
     end

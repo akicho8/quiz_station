@@ -55,3 +55,4 @@ gem 'slim'
 gem 'acts-as-taggable-on'
 gem 'rails_autolink'
 gem 'dropbox-sdk', :require => false
+gem 'kaminari'

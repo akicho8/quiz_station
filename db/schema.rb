@@ -14,11 +14,15 @@
 ActiveRecord::Schema.define(version: 20140818025551) do
 
   create_table "missions", force: :cascade do |t|
-    t.text     "question_body", limit: 65535
-    t.text     "answer_body",   limit: 65535
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.text     "question_body",   limit: 65535
+    t.text     "answer_body",     limit: 65535
+    t.integer  "difficult_level", limit: 4
+    t.integer  "display_counter", limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
+
+  add_index "missions", ["difficult_level"], name: "index_missions_on_difficult_level", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id",        limit: 4

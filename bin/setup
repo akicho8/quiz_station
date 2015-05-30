@@ -27,5 +27,6 @@ Dir.chdir APP_ROOT do
   system "rm -rf tmp/cache"
 
   puts "\n== Test =="
+  system "bin/rake db:migrate:reset RAILS_ENV=test"
   system "bin/rake"
 end
