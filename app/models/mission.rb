@@ -7,6 +7,8 @@ class Mission < ActiveRecord::Base
   before_validation do
     self.display_counter ||= 0
     self.difficult_level ||= 0
+    self.foobar_counter ||= 0
+    self.foobar_flag = false if foobar_flag.nil?
 
     if changes.has_key?(:question_body)
       self.question_body = question_body.to_s.strip.presence

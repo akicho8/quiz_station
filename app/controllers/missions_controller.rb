@@ -16,11 +16,11 @@ class MissionsController < ApplicationController
     #   @prev_mission = Mission.find(params[:prev_mission_id])
     # end
 
-    @missions = Mission.order(:display_counter).order(:difficult_level => :desc).order("rand()").take(30)
-    @missions.each do |mission|
-      mission.display_counter += 1
-      mission.save!
-    end
+    @missions = Mission.order(:difficult_level => :desc).order("rand()").take(30)
+    # @missions.each do |mission|
+    #   mission.display_counter += 1
+    #   mission.save!
+    # end
   end
 
   def marubatu
@@ -57,6 +57,7 @@ class MissionsController < ApplicationController
     respond_to do |format|
       if @mission.update(mission_params)
         format.html { redirect_to @mission, notice: 'Mission was successfully updated.' }
+        format.js   { head :ok }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -80,6 +81,6 @@ class MissionsController < ApplicationController
   end
 
   def mission_params
-    params.require(:mission).permit(:question_body, :answer_body, :tag_list)
+    params.require(:mission).permit!
   end
 end

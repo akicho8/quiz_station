@@ -24,3 +24,24 @@ $(document).on "click", ".kotae_display", (e) =>
   answerbody = $(e.target).data("answerbody")
   $(e.target).html(answerbody)
   # alert $(e.target).data("answerbody")
+
+$(document).on "click", ".edit_mission :checkbox", (e) =>
+  form = $(e.target).parents("form")
+  form.submit()
+  # e.preventDefault()
+  # $.ajax
+  #   url: form.attr('action')
+  #   type: form.attr('method')
+  #   data: form.serialize()
+  # alert $(e.target).parents("form").serialize()
+  # $(e.target).parents("form").submit()
+
+$(document)
+  .ajaxStart ->
+    $("#spinner").html($.active)
+    $("#spinner").show()
+  .ajaxStop ->
+    if $.active == 0
+      $("#spinner").hide()
+  .ajaxError (event, XMLHttpRequest, options, thrownError) ->
+     alert "#{XMLHttpRequest.status} #{XMLHttpRequest.statusText})"
