@@ -51,7 +51,7 @@ group :development, :test do
 end
 
 gem 'bootstrap3_rails'
-gem 'slim'
+gem 'slim-rails'
 gem 'acts-as-taggable-on'
 gem 'rails_autolink'
 gem 'dropbox-sdk', :require => false

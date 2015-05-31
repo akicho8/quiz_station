@@ -31,10 +31,22 @@ list.each do |attrs|
   # end
   # answer_body = md.captures.first
   # question_body = question_body.sub(/\(.*\)/, "（？）")
-  p Mission.create!({
-      :question_body     => question_body,
-      :answer_body       => answer_body,
-      :category_tag_list => attrs[:category],
-      :tag_list          => [attrs[:category],attrs[:word]].join(" "),
-    })
+  if mission = Mission.find_by(:question_body => question_body)
+    raise "ここにくることはない"
+    # tag_list で引いたものに category_tags を設定する
+
+    tags = [attrs[:category], attrs[:word].split("/")].flatten.compact
+    mission.tag_list.add(tags)
+    mission.category_tag_list.add(attrs[:category])
+    mission.save!
+    p "Update #{mission.id}"
+  else
+    mission = Mission.create!({
+        :question_body     => question_body,
+        :answer_body       => answer_body,
+        :category_tag_list => attrs[:category],
+        :tag_list          => [attrs[:category],attrs[:word]].join(" "),
+      })
+    p "Create #{mission.id}"
+  end
 end
