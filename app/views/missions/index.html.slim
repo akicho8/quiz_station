@@ -10,12 +10,13 @@
 - @missions.each do |mission|
   - if mission
     .row
-      .col-xs-1
+      .col-xs-2
         = form_for(mission, :remote => true) do |form|
           = form.check_box(:foobar_flag)
-      .col-xs-11
+        = mission.display_counter
+      .col-xs-10
         .panel.panel-default
-          = content_tag(:div, :class => "panel-body")
+          = content_tag(:div, :class => "panel-body") do
             = form_for(mission, :url => polymorphic_path([:marubatu2, mission]), :remote => true) do |form|
               = ""
             = mission.question_body2
