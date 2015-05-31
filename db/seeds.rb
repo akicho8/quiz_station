@@ -24,12 +24,13 @@ list.each do |attrs|
   if question_body.blank?
     next
   end
-  md = question_body.match(/\((.*)\)/)
-  unless md
-    raise attrs.inspect
-  end
-  answer_body = md.captures.first
-  question_body = question_body.sub(/\(.*\)/, "（？）")
+  answer_body = nil
+  # md = question_body.match(/\((.*)\)/)
+  # unless md
+  #   raise attrs.inspect
+  # end
+  # answer_body = md.captures.first
+  # question_body = question_body.sub(/\(.*\)/, "（？）")
   p Mission.create!({
       :question_body     => question_body,
       :answer_body       => answer_body,

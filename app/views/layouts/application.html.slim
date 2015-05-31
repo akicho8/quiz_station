@@ -20,7 +20,9 @@ html{lang="ja"}
           = link_to(AppConfig[:app_name], :root, class: "navbar-brand")
         #navbar.navbar-collapse.collapse
           ul.nav.navbar-nav
-            li= link_to("登録", [:new, :mission])
+            li= link_to("ランダム", polymorphic_path(:missions, :random => true))
+            li= link_to("チェックのみ", polymorphic_path(:missions, :checked_condition => true))
+            li= link_to("回答してない", polymorphic_path(:missions, :display_counter_order => true))
             li.dropdown
               - caret = content_tag(:span, '', :class => 'caret')
               = link_to("もっと見る#{caret}".html_safe, "#", :class => "dropdown-toggle", :data => {:toggle => "dropdown"}, :role => "button", "aria-expanded" => "false")

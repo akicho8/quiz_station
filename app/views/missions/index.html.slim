@@ -13,15 +13,19 @@
       .col-xs-1
         = form_for(mission, :remote => true) do |form|
           = form.check_box(:foobar_flag)
-      .col-xs-8
+      .col-xs-11
         .panel.panel-default
-          .panel-body
-            = mission.question_body
+          = content_tag(:div, :class => "panel-body")
+            = form_for(mission, :url => polymorphic_path([:marubatu2, mission]), :remote => true) do |form|
+              = ""
+            = mission.question_body2
+            = content_tag(:div, mission.answer_body2, :style => "display:none", :class => "question_answer")
+
             / .text-muted
             /   = "ヒント: #{mission.category_tag_list}"
-      .col-xs-3
-        .btn-group.btn-group-justified
-          = link_to("答", "#", :data => {:answerbody => mission.answer_body}, :class => "btn btn-default kotae_display")
+      / .col-xs-4
+      /   .btn-group.btn-group-justified
+        / = link_to("答", "#", :data => {:answerbody => mission.answer_body}, :class => "btn btn-default kotae_display")
         / = link_to("答えを見る", polymorphic_path(:missions, :id => mission.id, :with_answer => true), :class => "btn btn-default")
         / = link_to("次のクイズへ", polymorphic_path(:missions, :prev_mission_id => mission.id), :class => "btn btn-default")
         / p

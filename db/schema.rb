@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20140818025551) do
 
   create_table "missions", force: :cascade do |t|
     t.text     "question_body",   limit: 65535, null: false
-    t.text     "answer_body",     limit: 65535, null: false
+    t.text     "answer_body",     limit: 65535
     t.integer  "difficult_level", limit: 4,     null: false
     t.integer  "display_counter", limit: 4,     null: false
     t.integer  "foobar_counter",  limit: 4,     null: false

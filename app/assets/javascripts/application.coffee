@@ -16,26 +16,7 @@
 #= require bootstrap.min
 #= require_tree .
 
-$(document).on "click", ".kotae_display", (e) =>
-  e.preventDefault()
-  e.stopPropagation()
-  e.stopImmediatePropagation()
-  $(e.target).replace_html
-  answerbody = $(e.target).data("answerbody")
-  $(e.target).html(answerbody)
-  # alert $(e.target).data("answerbody")
-
-$(document).on "click", ".edit_mission :checkbox", (e) =>
-  form = $(e.target).parents("form")
-  form.submit()
-  # e.preventDefault()
-  # $.ajax
-  #   url: form.attr('action')
-  #   type: form.attr('method')
-  #   data: form.serialize()
-  # alert $(e.target).parents("form").serialize()
-  # $(e.target).parents("form").submit()
-
+# AJAX動作確認用
 $(document)
   .ajaxStart ->
     $("#spinner").html($.active)
@@ -45,3 +26,29 @@ $(document)
       $("#spinner").hide()
   .ajaxError (event, XMLHttpRequest, options, thrownError) ->
      alert "#{XMLHttpRequest.status} #{XMLHttpRequest.statusText})"
+
+# 問題をクリックすると答えのコンテンツで上書きする
+$(document).on "click", ".panel-body", (e) ->
+  panel = $(e.target).parents(".panel") # e.target は .panel-body 自身だったり、.panel-body span だったりするため共通の親の .panel から操作する
+
+  xxx = panel.find("form")
+  xxx.submit()
+
+  question_answer = panel.find(".question_answer") # .panel .question_answer のコンテンツを panel-body の直下に移す
+  panel_body = panel.find(".panel-body")
+  panel_body.html(question_answer.html())
+
+# 重要チェックボックスをクリックすると即submitを発行する
+# チェックボックスクリック→submitクリックのショートカットに相当する
+$(document).on "click", ".edit_mission :checkbox", (e) =>
+  form = $(e.target).parents("form")
+  form.submit()
+
+# $(document).on "click", ".kotae_display", (e) =>
+#   e.preventDefault()
+#   e.stopPropagation()
+#   e.stopImmediatePropagation()
+#   answerbody = $(e.target).data("answerbody")
+#   $(e.target).html(answerbody)
+#   # alert $(e.target).data("answerbody")
+

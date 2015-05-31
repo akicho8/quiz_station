@@ -21,9 +21,30 @@ class Mission < ActiveRecord::Base
 
   with_options(:presence => true) do |o|
     o.validates :question_body
-    o.validates :answer_body
+    # o.validates :answer_body
   end
   with_options(:allow_blank => true) do |o|
     o.validates :question_body, :uniqueness => true
+  end
+
+  def question_body2
+    question_body.gsub(/\(.*\)/) {|str|
+      chars = str.chars
+      chars = chars[1..-2]
+      str = [chars.first, "？" * (chars.size - 1)].join
+      "<span class='question_strong'>#{str}</span>".html_safe
+    }.html_safe
+  end
+
+  def answer_body2
+    if answer_body
+      answer_body
+    else
+      question_body.gsub(/\(.*\)/) {|str|
+        chars = str.chars
+        chars = chars[1..-2]
+        "<span class='answer_strong'>#{chars.join}</span>"
+      }.html_safe
+    end
   end
 end
