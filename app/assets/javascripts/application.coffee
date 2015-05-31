@@ -30,13 +30,12 @@ $(document)
 # 問題をクリックすると答えのコンテンツで上書きする
 $(document).on "click", ".panel-body", (e) ->
   panel = $(e.target).parents(".panel") # e.target は .panel-body 自身だったり、.panel-body span だったりするため共通の親の .panel から操作する
-
-  xxx = panel.find("form")
-  xxx.submit()
-
   question_answer = panel.find(".question_answer") # .panel .question_answer のコンテンツを panel-body の直下に移す
   panel_body = panel.find(".panel-body")
   panel_body.html(question_answer.html())
+  # marubatu2 のフォームもついでに submit しておく
+  form = panel.find("form")
+  form.submit()
 
 # 重要チェックボックスをクリックすると即submitを発行する
 # チェックボックスクリック→submitクリックのショートカットに相当する
