@@ -21,9 +21,9 @@ list = CSV.parse(str, :headers => :first_row, :header_converters => :symbol, :sk
 
 list.each do |attrs|
   question_body = attrs[:question_body]
-  if question_body.blank?
-    next
-  end
+  # if question_body.blank?
+  #   next
+  # end
   answer_body = nil
   # md = question_body.match(/\((.*)\)/)
   # unless md
@@ -31,22 +31,37 @@ list.each do |attrs|
   # end
   # answer_body = md.captures.first
   # question_body = question_body.sub(/\(.*\)/, "（？）")
-  if mission = Mission.find_by(:question_body => question_body)
-    raise "ここにくることはない"
-    # tag_list で引いたものに category_tags を設定する
 
-    tags = [attrs[:category], attrs[:word].split("/")].flatten.compact
-    mission.tag_list.add(tags)
-    mission.category_tag_list.add(attrs[:category])
-    mission.save!
-    p "Update #{mission.id}"
-  else
+  category = attrs[:category]
+  tags = attrs[:word].split("/")
+
+  if question_body.present?
+    p [category, tags]
     mission = Mission.create!({
         :question_body     => question_body,
         :answer_body       => answer_body,
-        :category_tag_list => attrs[:category],
-        :tag_list          => [attrs[:category],attrs[:word]].join(" "),
+        :category_tag_list => category,
+        :tag_list          => tags,
       })
     p "Create #{mission.id}"
+  end
+end
+
+list.each do |attrs|
+  question_body = attrs[:question_body]
+
+  category = attrs[:category]
+  tags = attrs[:word].split("/")
+
+  if question_body.blank?
+    missions = Mission.tagged_with(tags, :any => true, :on => :tags)
+    if missions.blank?
+      # raise attrs.inspect
+    end
+    missions.each do |mission|
+      mission.category_tag_list.add(category)
+      mission.save!
+      p "#{tags} で探して #{attrs[:category]} to #{mission.id}"
+    end
   end
 end
