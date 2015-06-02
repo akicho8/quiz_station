@@ -36,6 +36,7 @@ $(document).on "click", ".panel-body", (e) ->
   # marubatu2 のフォームもついでに submit しておく
   form = panel.find("form")
   form.submit()
+  form.remove("form") # 一回だけの submit にしたいので form を消す
 
 # 重要チェックボックスをクリックすると即submitを発行する
 # チェックボックスクリック→submitクリックのショートカットに相当する
