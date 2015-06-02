@@ -31,7 +31,11 @@ class Mission < ActiveRecord::Base
     question_body.gsub(/\(.*\)/) {|str|
       chars = str.chars
       chars = chars[1..-2]
-      str = [chars.first, "？" * (chars.size - 1)].join
+      if false
+        str = [chars.first, "？" * (chars.size - 1)].join
+      else
+        str = "？" * chars.size
+      end
       "<span class='question_strong'>#{str}</span>".html_safe
     }.html_safe
   end
