@@ -40,7 +40,7 @@ $(document).on "click", ".panel-body", (e) ->
 
 # 重要チェックボックスをクリックすると即submitを発行する
 # チェックボックスクリック→submitクリックのショートカットに相当する
-$(document).on "click", ".edit_mission :checkbox", (e) =>
+$(document).on "click", ".edit_article :checkbox", (e) =>
   form = $(e.target).parents("form")
   form.submit()
 

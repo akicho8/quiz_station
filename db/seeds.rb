@@ -15,7 +15,7 @@ end
 
 str = file_content("kotoba_dictionary.csv")
 
-Mission.destroy_all
+Article.destroy_all
 
 list = CSV.parse(str, :headers => :first_row, :header_converters => :symbol, :skip_blanks => true, :converters => :numeric).collect(&:to_hash)
 
@@ -27,12 +27,12 @@ list.each do |attrs|
 
   if question_body.present?
     # p [category, tags]
-    mission = Mission.create!({
+    article = Article.create!({
         :question_body     => question_body,
         :category_tag_list => category,
         :tag_list          => tags,
       })
-    p "Create #{mission.id}"
+    p "Create #{article.id}"
   end
 end
 
@@ -43,14 +43,14 @@ list.each do |attrs|
   tags = attrs[:word].split("/")
 
   if question_body.blank?
-    missions = Mission.tagged_with(tags, :any => true, :on => :tags)
-    if missions.blank?
+    articles = Article.tagged_with(tags, :any => true, :on => :tags)
+    if articles.blank?
       # raise attrs.inspect
     end
-    missions.each do |mission|
-      mission.category_tag_list.add(category)
-      mission.save!
-      p "#{tags} で探して #{attrs[:category]} to #{mission.id}"
+    articles.each do |article|
+      article.category_tag_list.add(category)
+      article.save!
+      p "#{tags} で探して #{attrs[:category]} to #{article.id}"
     end
   end
 end

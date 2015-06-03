@@ -18,10 +18,10 @@
     },
     :activerecord => {
       :models => {
-        :mission => "ミッション",
+        :article => "ミッション",
       },
       :attributes => {
-        :mission => {
+        :article => {
         },
       },
     },

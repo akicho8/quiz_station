@@ -54,8 +54,8 @@ RSpec.configure do |config|
       SecureRandom.hex
     end
 
-    def mission_create
-      Mission.create!(:question_body => hex, :tag_list => hex)
+    def article_create
+      Article.create!(:question_body => hex, :tag_list => hex)
     end
   }
 end

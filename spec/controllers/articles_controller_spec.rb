@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 require 'rails_helper'
 
-RSpec.describe MissionsController, type: :controller do
+RSpec.describe ArticlesController, type: :controller do
   before do
-    Mission.destroy_all
-    @mission = mission_create
+    Article.destroy_all
+    @article = article_create
   end
 
   it "index" do
@@ -13,7 +13,7 @@ RSpec.describe MissionsController, type: :controller do
   end
 
   it "show" do
-    get :show, :id => @mission.id
+    get :show, :id => @article.id
     assert_response :success
   end
 
@@ -23,22 +23,22 @@ RSpec.describe MissionsController, type: :controller do
   end
 
   it "create" do
-    post :create, :mission => {:question_body => hex, :tag_list => hex}
+    post :create, :article => {:question_body => hex, :tag_list => hex}
     assert_response :redirect
   end
 
   it "edit" do
-    get :edit, :id => @mission.id
+    get :edit, :id => @article.id
     assert_response :success
   end
 
   it "update" do
-    put :update, :id => @mission.id, :mission => {:question_body => hex, :tag_list => hex}
+    put :update, :id => @article.id, :article => {:question_body => hex, :tag_list => hex}
     assert_response :redirect
   end
 
   it "destroy" do
-    delete :destroy, :id => @mission.id
+    delete :destroy, :id => @article.id
     assert_response :redirect
   end
 end

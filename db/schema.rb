@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20140818025551) do
 
-  create_table "missions", force: :cascade do |t|
+  create_table "articles", force: :cascade do |t|
     t.text     "question_body",    limit: 65535, null: false
     t.integer  "answered_counter", limit: 4,     null: false
     t.boolean  "important_flag",   limit: 1,     null: false
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20140818025551) do
     t.datetime "updated_at",                     null: false
   end
 
-  add_index "missions", ["important_flag"], name: "index_missions_on_important_flag", using: :btree
+  add_index "articles", ["important_flag"], name: "index_articles_on_important_flag", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id",        limit: 4
