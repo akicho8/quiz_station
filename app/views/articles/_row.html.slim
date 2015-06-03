@@ -1,12 +1,18 @@
 .row
-  .col-xs-2
-    = form_for(article, :remote => true) do |form|
-      = form.check_box(:important_flag)
-    = article.answered_counter
-  .col-xs-10
+  / .col-xs-2
+  .col-xs-12
     .panel.panel-default
-      = form_for(article, :url => polymorphic_path([:answered_counter_inc, article]), :remote => true) do |form|
+      = form_for(article, :url => polymorphic_path([:answered_counter_inc, article]), :remote => true, :html => {:class => "answered_counter_inc_form"}) do |form|
         = ""
+      / = content_tag(:div, :class => "panel-heading") do
+      /   = content_tag(:div, :class => "panel-title") do
+      /     = article_counter.next
       = content_tag(:div, :class => "panel-body") do
-        = article.question_body2
+        = form_for(article, :remote => true, :html => {:class => "important_flag_form"}) do |form|
+          = form.check_box(:important_flag)
+          = " "
+          span.question_body2
+            = article.question_body2
         = content_tag(:div, article.answer_body2, :style => "display:none", :class => "question_answer")
+        / - if Rails.env.development?
+        /   = article.answered_counter

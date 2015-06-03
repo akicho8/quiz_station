@@ -4,7 +4,7 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy, :marubatu, :answered_counter_inc]
 
   def index
-    limit = 30
+    limit = 100
     if params[:not_answered_order]
       @articles = Article.order(:answered_counter).order("rand()").take(limit)
     elsif params[:checked_condition]

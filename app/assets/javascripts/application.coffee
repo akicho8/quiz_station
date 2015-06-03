@@ -31,18 +31,21 @@ $(document)
 $(document).on "click", ".panel-body", (e) ->
   panel = $(e.target).parents(".panel") # e.target は .panel-body 自身だったり、.panel-body span だったりするため共通の親の .panel から操作する
   question_answer = panel.find(".question_answer") # .panel .question_answer のコンテンツを panel-body の直下に移す
-  panel_body = panel.find(".panel-body")
+  panel_body = panel.find(".question_body2")
   panel_body.html(question_answer.html())
   # answered_counter_inc のフォームもついでに submit しておく
-  form = panel.find("form")
+  form = panel.find(".answered_counter_inc_form")
   form.submit()
-  form.remove("form") # 一回だけの submit にしたいので form を消す
+  form.remove() # 一回だけの submit にしたいので form を消す
 
 # 重要チェックボックスをクリックすると即submitを発行する
 # チェックボックスクリック→submitクリックのショートカットに相当する
-$(document).on "click", ".edit_article :checkbox", (e) =>
+$(document).on "click", ".important_flag_form :checkbox", (e) =>
   form = $(e.target).parents("form")
   form.submit()
+  # e.preventDefault()
+  # e.stopPropagation()
+  e.stopImmediatePropagation()  # 問題の領域をクリックしたことになってしまうのをふせぐため。
 
 # $(document).on "click", ".kotae_display", (e) =>
 #   e.preventDefault()
