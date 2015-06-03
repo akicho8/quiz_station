@@ -5,23 +5,18 @@ class Mission < ActiveRecord::Base
   acts_as_taggable_on :category_tags
 
   before_validation do
-    self.display_counter ||= 0
-    self.difficult_level ||= 0
-    self.foobar_counter ||= 0
-    self.foobar_flag = false if foobar_flag.nil?
+    self.answered_counter ||= 0
+    self.important_flag = false if important_flag.nil?
 
     if changes.has_key?(:question_body)
       self.question_body = question_body.to_s.strip.presence
     end
-    if changes.has_key?(:answer_body)
-      self.answer_body = answer_body.to_s.strip.presence
-    end
+
     true
   end
 
   with_options(:presence => true) do |o|
     o.validates :question_body
-    # o.validates :answer_body
   end
   with_options(:allow_blank => true) do |o|
     o.validates :question_body, :uniqueness => true
@@ -41,14 +36,10 @@ class Mission < ActiveRecord::Base
   end
 
   def answer_body2
-    if answer_body
-      answer_body
-    else
-      question_body.gsub(/\(.*\)/) {|str|
-        chars = str.chars
-        chars = chars[1..-2]
-        "<span class='answer_strong'>#{chars.join}</span>"
-      }.html_safe
-    end
+    question_body.gsub(/\(.*\)/) {|str|
+      chars = str.chars
+      chars = chars[1..-2]
+      "<span class='answer_strong'>#{chars.join}</span>"
+    }.html_safe
   end
 end

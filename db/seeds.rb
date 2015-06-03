@@ -21,25 +21,14 @@ list = CSV.parse(str, :headers => :first_row, :header_converters => :symbol, :sk
 
 list.each do |attrs|
   question_body = attrs[:question_body]
-  # if question_body.blank?
-  #   next
-  # end
-  answer_body = nil
-  # md = question_body.match(/\((.*)\)/)
-  # unless md
-  #   raise attrs.inspect
-  # end
-  # answer_body = md.captures.first
-  # question_body = question_body.sub(/\(.*\)/, "（？）")
 
   category = attrs[:category]
   tags = attrs[:word].split("/")
 
   if question_body.present?
-    p [category, tags]
+    # p [category, tags]
     mission = Mission.create!({
         :question_body     => question_body,
-        :answer_body       => answer_body,
         :category_tag_list => category,
         :tag_list          => tags,
       })

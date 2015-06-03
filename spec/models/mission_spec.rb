@@ -7,6 +7,6 @@ RSpec.describe Mission, type: :model do
   end
 
   it "作成" do
-    Mission.create!(:question_body => "(question_body)", :answer_body => "(answer_body)", :tag_list => "tag1")
+    Mission.create!(:question_body => "(question_body)", :tag_list => "tag1")
   end
 end

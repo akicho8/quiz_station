@@ -23,7 +23,7 @@ RSpec.describe MissionsController, type: :controller do
   end
 
   it "create" do
-    post :create, :mission => {:question_body => hex, :tag_list => hex, :answer_body => hex}
+    post :create, :mission => {:question_body => hex, :tag_list => hex}
     assert_response :redirect
   end
 
@@ -33,7 +33,7 @@ RSpec.describe MissionsController, type: :controller do
   end
 
   it "update" do
-    put :update, :id => @mission.id, :mission => {:question_body => hex, :tag_list => hex, :answer_body => hex}
+    put :update, :id => @mission.id, :mission => {:question_body => hex, :tag_list => hex}
     assert_response :redirect
   end
 

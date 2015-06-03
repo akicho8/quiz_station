@@ -33,7 +33,7 @@ $(document).on "click", ".panel-body", (e) ->
   question_answer = panel.find(".question_answer") # .panel .question_answer のコンテンツを panel-body の直下に移す
   panel_body = panel.find(".panel-body")
   panel_body.html(question_answer.html())
-  # marubatu2 のフォームもついでに submit しておく
+  # answered_counter_inc のフォームもついでに submit しておく
   form = panel.find("form")
   form.submit()
   form.remove("form") # 一回だけの submit にしたいので form を消す

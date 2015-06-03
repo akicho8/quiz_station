@@ -55,7 +55,7 @@ RSpec.configure do |config|
     end
 
     def mission_create
-      Mission.create!(:question_body => hex, :answer_body => hex, :tag_list => hex)
+      Mission.create!(:question_body => hex, :tag_list => hex)
     end
   }
 end

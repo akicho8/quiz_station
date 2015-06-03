@@ -1,44 +1,21 @@
 # -*- coding: utf-8 -*-
 
 class MissionsController < ApplicationController
-  before_action :set_mission, only: [:show, :edit, :update, :destroy, :marubatu, :marubatu2]
+  before_action :set_mission, only: [:show, :edit, :update, :destroy, :marubatu, :answered_counter_inc]
 
   def index
-    # if params[:query]
-    #   @mission = Mission.tagged_with(params[:query]).order("rand()").take
-    # elsif params[:id]
-    #   @mission = Mission.find(params[:id])
-    # else
-    #   @mission = Mission.order("rand()").take
-    # end
-    #
-    # if params[:prev_mission_id]
-    #   @prev_mission = Mission.find(params[:prev_mission_id])
-    # end
-
     limit = 30
-    if params[:display_counter_order]
-      @missions = Mission.order(:display_counter).order("rand()").take(limit)
+    if params[:not_answered_order]
+      @missions = Mission.order(:answered_counter).order("rand()").take(limit)
     elsif params[:checked_condition]
-      @missions = Mission.where(:foobar_flag => true).order("rand()").take(limit)
+      @missions = Mission.where(:important_flag => true).order("rand()").take(limit)
     else
       @missions = Mission.order("rand()").take(limit)
     end
-
-    # @missions.each do |mission|
-    #   mission.display_counter += 1
-    #   mission.save!
-    # end
   end
 
-  def marubatu
-    @mission.difficult_level += params[:difficult_level_add].to_i
-    @mission.save!
-    render json: { status: :ok }
-  end
-
-  def marubatu2
-    @mission.display_counter += 1
+  def answered_counter_inc
+    @mission.answered_counter += 1
     @mission.save!
     render json: { status: :ok }
   end
