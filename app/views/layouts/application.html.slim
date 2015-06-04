@@ -17,12 +17,11 @@ html{lang="ja"}
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          = link_to(AppConfig[:app_name], :root, class: "navbar-brand")
+          = link_to(AppConfig[:app_name] + "(#{Article.where(Article.arel_table[:answered_counter].gteq(1)).count}/#{Article.count})", :root, class: "navbar-brand")
         #navbar.navbar-collapse.collapse
           ul.nav.navbar-nav
-            li= link_to("ランダム", polymorphic_path(:articles, :random => true))
+            li= link_to("ランダム", polymorphic_path(:articles))
             li= link_to("チェックのみ", polymorphic_path(:articles, :checked_condition => true))
-            li= link_to("回答してない", polymorphic_path(:articles, :not_answered_order => true))
             li.dropdown
               - caret = content_tag(:span, '', :class => 'caret')
               = link_to("もっと見る#{caret}".html_safe, "#", :class => "dropdown-toggle", :data => {:toggle => "dropdown"}, :role => "button", "aria-expanded" => "false")

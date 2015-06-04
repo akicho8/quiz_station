@@ -6,13 +6,18 @@
         = ""
       / = content_tag(:div, :class => "panel-heading") do
       /   = content_tag(:div, :class => "panel-title") do
-      /     = article_counter.next
+      /       => article.category_tag_list.join("／")
+      /       => "(#{article.answered_counter})"
+      /       / = article_counter.next
       = content_tag(:div, :class => "panel-body") do
-        = form_for(article, :remote => true, :html => {:class => "important_flag_form"}) do |form|
-          = form.check_box(:important_flag)
-          = " "
-          span.question_body2
-            = article.question_body2
+        .row
+          .col-xs-2
+            = form_for(article, :remote => true, :html => {:class => "important_flag_form"}) do |form|
+              = form.check_box(:important_flag)
+              = " "
+          .col-xs-10
+            span.question_body2
+              = article.question_body2
         = content_tag(:div, article.answer_body2, :style => "display:none", :class => "question_answer")
         / - if Rails.env.development?
         /   = article.answered_counter

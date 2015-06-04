@@ -5,12 +5,10 @@ class ArticlesController < ApplicationController
 
   def index
     limit = 100
-    if params[:not_answered_order]
-      @articles = Article.order(:answered_counter).order("rand()").take(limit)
-    elsif params[:checked_condition]
+    if params[:checked_condition]
       @articles = Article.where(:important_flag => true).order("rand()").take(limit)
     else
-      @articles = Article.order("rand()").take(limit)
+      @articles = Article.order(:answered_counter).order("rand()").take(limit)
     end
   end
 
