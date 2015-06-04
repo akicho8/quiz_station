@@ -1,0 +1,11 @@
+- if @article.errors.present?
+  = simple_format @article.errors.full_messages.join("\n")
+
+= form_for(@article) do |form|
+  .form-group
+    = form.label :question_body
+    = form.text_area :question_body, :class => "form-control"
+  .form-group
+    = form.label :tag_list
+    = form.text_field :tag_list, :class => "form-control"
+  = form.submit :class => "btn btn-default"
