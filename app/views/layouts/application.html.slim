@@ -27,11 +27,16 @@ html{lang="ja"}
               = link_to("もっと見る#{caret}".html_safe, "#", :class => "dropdown-toggle", :data => {:toggle => "dropdown"}, :role => "button", "aria-expanded" => "false")
               ul.dropdown-menu role="menu"
                 li= link_to("登録", [:new, :article])
+                li= link_to("new_user_session", :new_user_session)
     .container
       / #spinner style="display: none"
       - if notice
         p#notice
           = notice
+      - if alert
+        p#alert
+          = alert
+
       = yield
     / footer.footer
     /   .container

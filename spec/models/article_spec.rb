@@ -7,6 +7,6 @@ RSpec.describe Article, type: :model do
   end
 
   it "作成" do
-    Article.create!(:question_body => "(question_body)", :tag_list => "tag1")
+    Article.create!(attributes_for(:article))
   end
 end

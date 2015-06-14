@@ -3,6 +3,8 @@ require 'rails_helper'
 
 RSpec.describe ArticlesController, type: :controller do
   before do
+    sign_in create(:user)
+
     Article.destroy_all
     @article = article_create
   end

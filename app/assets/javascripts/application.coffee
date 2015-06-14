@@ -25,7 +25,7 @@ $(document)
     if $.active == 0
       $("#spinner").hide()
   .ajaxError (event, XMLHttpRequest, options, thrownError) ->
-     alert "#{XMLHttpRequest.status} #{XMLHttpRequest.statusText})"
+     alert "#{XMLHttpRequest.status} (#{XMLHttpRequest.statusText})"
 
 # 問題をクリックすると答えのコンテンツで上書きする
 $(document).on "click", ".panel-body", (e) ->
