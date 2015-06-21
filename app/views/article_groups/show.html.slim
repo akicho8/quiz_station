@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong User:
+  = @article_group.user
+p
+  strong Name:
+  = @article_group.name
+
+= link_to 'Edit', edit_article_group_path(@article_group)
+'|
+= link_to 'Back', article_groups_path

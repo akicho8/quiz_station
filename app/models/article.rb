@@ -4,6 +4,11 @@ class Article < ActiveRecord::Base
   acts_as_taggable
   acts_as_taggable_on :category_tags
 
+  belongs_to :article_group
+
+  has_many :answer_logs, :dependent => :destroy
+  has_many :users, :dependent => :destroy, :through => :answer_logs
+
   before_validation do
     self.answered_counter ||= 0
     self.important_flag = false if important_flag.nil?
@@ -23,7 +28,7 @@ class Article < ActiveRecord::Base
   end
 
   def question_body2
-    question_body.gsub(/\(.*\)/) {|str|
+    question_body.gsub(/\(.*?\)/) {|str|
       chars = str.chars
       chars = chars[1..-2]
       if false
@@ -36,7 +41,7 @@ class Article < ActiveRecord::Base
   end
 
   def answer_body2
-    question_body.gsub(/\(.*\)/) {|str|
+    question_body.gsub(/\(.*?\)/) {|str|
       chars = str.chars
       chars = chars[1..-2]
       "<span class='answer_strong'>#{chars.join}</span>"

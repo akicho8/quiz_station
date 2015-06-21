@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong User:
+  = @answer_log.user
+p
+  strong Article:
+  = @answer_log.article
+p
+  strong Column dummy1:
+  = @answer_log.column_dummy1
+
+= link_to 'Edit', edit_answer_log_path(@answer_log)
+'|
+= link_to 'Back', answer_logs_path

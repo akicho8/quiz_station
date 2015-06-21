@@ -1,0 +1,21 @@
+= form_for @articlemark do |f|
+  - if @articlemark.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@articlemark.errors.count, "error")} prohibited this articlemark from being saved:"
+      ul
+        - @articlemark.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :user
+    = f.text_field :user
+  .field
+    = f.label :article
+    = f.text_field :article
+  .field
+    = f.label :answered_counter
+    = f.number_field :answered_counter
+  .field
+    = f.label :important_flag
+    = f.check_box :important_flag
+  .actions = f.submit

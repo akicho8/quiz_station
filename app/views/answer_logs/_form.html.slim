@@ -1,0 +1,18 @@
+= form_for @answer_log do |f|
+  - if @answer_log.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@answer_log.errors.count, "error")} prohibited this answer_log from being saved:"
+      ul
+        - @answer_log.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :user
+    = f.text_field :user
+  .field
+    = f.label :article
+    = f.text_field :article
+  .field
+    = f.label :column_dummy1
+    = f.text_field :column_dummy1
+  .actions = f.submit

@@ -1,20 +1,36 @@
 # -*- coding: utf-8 -*-
 
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :answered_counter_inc]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :answered_counter_inc, :mark_exec]
 
   def index
-    limit = 100
-    if params[:checked_condition]
-      @articles = Article.where(:important_flag => true).order("rand()").take(limit)
+    if params[:article_group_id]
+      articles = ArticleGroup.find(params[:article_group_id]).articles
     else
-      @articles = Article.order(:answered_counter).order("rand()").take(limit)
+      articles = Article.all
+    end
+
+    limit = 100
+    if params[:only_checked]
+      @articles = current_user.marked_articles.order("rand()").take(limit)
+    else
+      @articles = articles.joins("LEFT JOIN answer_logs ON answer_logs.article_id = articles.id AND answer_logs.user_id = #{current_user.id}").order("COUNT(answer_logs.id), rand()").group("articles.id").limit(limit)
     end
   end
 
   def answered_counter_inc
-    @article.answered_counter += 1
-    @article.save!
+    current_user.answer_logs.create!(:article => @article)
+    render json: { status: :ok }
+  end
+
+  def mark_exec
+    if params[:important_flag2]
+      unless current_user.marked_articles.include?(@article)
+        current_user.marked_articles << @article
+      end
+    else
+      current_user.marked_articles.destroy(@article)
+    end
     render json: { status: :ok }
   end
 

@@ -12,8 +12,9 @@
       = content_tag(:div, :class => "panel-body") do
         .row
           .col-xs-2
-            = form_for(article, :remote => true, :html => {:class => "important_flag_form"}) do |form|
-              = form.check_box(:important_flag)
+            = form_for(article, :url => polymorphic_path([:mark_exec, article]), :remote => true, :html => {:class => "important_flag_form"}) do |form|
+              = check_box_tag(:important_flag2, "true", current_user.marked_articles.include?(article))
+              / = form.check_box(:important_flag)
               = " "
           .col-xs-10
             span.question_body2

@@ -11,16 +11,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150612074251) do
+ActiveRecord::Schema.define(version: 20150615032016) do
+
+  create_table "answer_logs", force: :cascade do |t|
+    t.integer  "user_id",       limit: 4,   null: false
+    t.integer  "article_id",    limit: 4,   null: false
+    t.string   "column_dummy1", limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "answer_logs", ["article_id"], name: "index_answer_logs_on_article_id", using: :btree
+  add_index "answer_logs", ["user_id"], name: "index_answer_logs_on_user_id", using: :btree
+
+  create_table "article_groups", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "article_groups", ["user_id"], name: "index_article_groups_on_user_id", using: :btree
+
+  create_table "articlemarks", force: :cascade do |t|
+    t.integer  "user_id",          limit: 4
+    t.integer  "article_id",       limit: 4
+    t.integer  "answered_counter", limit: 4
+    t.boolean  "important_flag",   limit: 1
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "articlemarks", ["article_id"], name: "index_articlemarks_on_article_id", using: :btree
+  add_index "articlemarks", ["user_id"], name: "index_articlemarks_on_user_id", using: :btree
 
   create_table "articles", force: :cascade do |t|
     t.text     "question_body",    limit: 65535, null: false
     t.integer  "answered_counter", limit: 4,     null: false
     t.boolean  "important_flag",   limit: 1,     null: false
+    t.integer  "article_group_id", limit: 4,     null: false
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
   end
 
+  add_index "articles", ["article_group_id"], name: "index_articles_on_article_group_id", using: :btree
   add_index "articles", ["important_flag"], name: "index_articles_on_important_flag", using: :btree
 
   create_table "taggings", force: :cascade do |t|
