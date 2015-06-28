@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :answer_log do
+  factory :book do
     association :user, factory: :user
-    association :article, factory: :article
+    sequence(:name) {|i| "(name#{i})" }
   end
 end

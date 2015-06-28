@@ -1,12 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action do
-    # @current_user ||= request.env['warden'].authenticate!(:scope => :user)
-    # @current_user ||= warden.authenticate(scope: :user)
-    # # self.user_session[:cart] = "Cart"
-
     sign_in User.first
-    # warden.success!(User.first)
-    # @current_user ||= User.first
   end
 
   before_action :authenticate_user!

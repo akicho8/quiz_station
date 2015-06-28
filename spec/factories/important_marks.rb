@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :answer_log do
+  factory :important_mark do
     association :user, factory: :user
     association :article, factory: :article
   end

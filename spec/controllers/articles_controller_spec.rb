@@ -6,8 +6,7 @@ RSpec.describe ArticlesController, type: :controller do
     @alice = create(:user)
     sign_in @alice
 
-    Article.destroy_all
-    @article = article_create
+    @article = create(:article)
   end
 
   describe "index" do
@@ -21,23 +20,23 @@ RSpec.describe ArticlesController, type: :controller do
     end
   end
 
-  it "answered_counter_inc" do
-    patch :answered_counter_inc, :id => @article.id
+  it "answer_logs_create" do
+    patch :answer_logs_create, :id => @article.id
     assert_response :success
   end
 
-  describe "mark_exec" do
+  describe "mark_update" do
     it "on" do
-      patch :mark_exec, :id => @article.id
+      patch :mark_update, :id => @article.id, :important_flag => "true"
       assert_response :success
-      current_user.articlemarks.exists?(@article).should == true
+      @alice.marked_articles.include?(@article).should == true
     end
 
     it "off" do
-      @alice.articlemarks.create!(:article => @article)
-      patch :mark_exec, :id => @article.id
+      @alice.marked_articles << @article
+      patch :mark_update, :id => @article.id
       assert_response :success
-      current_user.articlemarks.exists?(@article).should == false
+      @alice.marked_articles.include?(@article).should == false
     end
   end
 
@@ -52,7 +51,7 @@ RSpec.describe ArticlesController, type: :controller do
   end
 
   it "create" do
-    post :create, :article => {:question_body => hex, :tag_list => hex}
+    post :create, :article => attributes_for(:article, :book_id => create(:book))
     assert_response :redirect
   end
 
@@ -62,7 +61,7 @@ RSpec.describe ArticlesController, type: :controller do
   end
 
   it "update" do
-    put :update, :id => @article.id, :article => {:question_body => hex, :tag_list => hex}
+    put :update, :id => @article.id, :article => attributes_for(:article)
     assert_response :redirect
   end
 

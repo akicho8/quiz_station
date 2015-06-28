@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
-  resources :article_groups
+  resources :books
   resources :answer_logs
-  resources :articlemarks
+  resources :important_marks
   get 'home/index'
 
   devise_for :users
   resources :articles do
-    patch :answered_counter_inc, :on => :member
-    patch :mark_exec, :on => :member
+    patch :answer_logs_create, :on => :member
+    patch :mark_update, :on => :member
   end
 
   # root "articles#index"

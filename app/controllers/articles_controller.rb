@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :answered_counter_inc, :mark_exec]
+  before_action :set_book
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :answer_logs_create, :mark_update]
 
   def index
-    if params[:article_group_id]
-      articles = ArticleGroup.find(params[:article_group_id]).articles
+    if @book
+      articles = @book.articles
     else
       articles = Article.all
     end
 
-    limit = 100
+    limit = params[:limit] || 100
     if params[:only_checked]
       @articles = current_user.marked_articles.order("rand()").take(limit)
     else
@@ -18,13 +19,13 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def answered_counter_inc
-    current_user.answer_logs.create!(:article => @article)
+  def answer_logs_create
+    current_user.answered_articles << @article
     render json: { status: :ok }
   end
 
-  def mark_exec
-    if params[:important_flag2]
+  def mark_update
+    if params[:important_flag]
       unless current_user.marked_articles.include?(@article)
         current_user.marked_articles << @article
       end
@@ -81,11 +82,17 @@ class ArticlesController < ApplicationController
 
   private
 
+  def set_book
+    if params[:book_id]
+      @book = Book.find(params[:book_id])
+    end
+  end
+
   def set_article
     @article = Article.find(params[:id])
   end
 
   def article_params
-    params.require(:article).permit!
+    params.require(:article).permit(:question_body, :book_id)
   end
 end

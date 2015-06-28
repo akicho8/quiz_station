@@ -48,14 +48,4 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
   config.render_views
-
-  config.include Module.new {
-    def hex
-      SecureRandom.hex
-    end
-
-    def article_create
-      Article.create!(:question_body => hex, :tag_list => hex)
-    end
-  }
 end

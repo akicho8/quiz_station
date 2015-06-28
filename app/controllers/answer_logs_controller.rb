@@ -62,13 +62,13 @@ class AnswerLogsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_answer_log
-      @answer_log = AnswerLog.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_answer_log
+    @answer_log = AnswerLog.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def answer_log_params
-      params.require(:answer_log).permit(:user_id, :article_id, :column_dummy1)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def answer_log_params
+    params.require(:answer_log).permit(:user_id, :article_id)
+  end
 end

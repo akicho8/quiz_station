@@ -1,24 +1,15 @@
 .row
-  / .col-xs-2
   .col-xs-12
     .panel.panel-default
-      = form_for(article, :url => polymorphic_path([:answered_counter_inc, article]), :remote => true, :html => {:class => "answered_counter_inc_form"}) do |form|
+      = form_for(article, :url => polymorphic_path([:answer_logs_create, article]), :remote => true, :html => {:class => "answer_logs_create_form"}) do |form|
         = ""
-      / = content_tag(:div, :class => "panel-heading") do
-      /   = content_tag(:div, :class => "panel-title") do
-      /       => article.category_tag_list.join("／")
-      /       => "(#{article.answered_counter})"
-      /       / = article_counter.next
       = content_tag(:div, :class => "panel-body") do
         .row
           .col-xs-2
-            = form_for(article, :url => polymorphic_path([:mark_exec, article]), :remote => true, :html => {:class => "important_flag_form"}) do |form|
-              = check_box_tag(:important_flag2, "true", current_user.marked_articles.include?(article))
-              / = form.check_box(:important_flag)
+            = form_for(article, :url => polymorphic_path([:mark_update, article]), :remote => true, :html => {:class => "mark_update_form"}) do |form|
+              = check_box_tag(:important_flag, "true", current_user.marked_articles.include?(article))
               = " "
           .col-xs-10
-            span.question_body2
-              = article.question_body2
-        = content_tag(:div, article.answer_body2, :style => "display:none", :class => "question_answer")
-        / - if Rails.env.development?
-        /   = article.answered_counter
+            span.v_question_body
+              = article.v_question_body
+        = content_tag(:div, article.v_answer_body, :style => "display:none", :class => "v_answer_body")

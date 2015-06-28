@@ -19,7 +19,7 @@
 # AJAX動作確認用
 $(document)
   .ajaxStart ->
-    $("#spinner").html($.active)
+    $("#spinner").html("処理中...")
     $("#spinner").show()
   .ajaxStop ->
     if $.active == 0
@@ -30,28 +30,17 @@ $(document)
 # 問題をクリックすると答えのコンテンツで上書きする
 $(document).on "click", ".panel-body", (e) ->
   panel = $(e.target).parents(".panel") # e.target は .panel-body 自身だったり、.panel-body span だったりするため共通の親の .panel から操作する
-  question_answer = panel.find(".question_answer") # .panel .question_answer のコンテンツを panel-body の直下に移す
-  panel_body = panel.find(".question_body2")
-  panel_body.html(question_answer.html())
-  # answered_counter_inc のフォームもついでに submit しておく
-  form = panel.find(".answered_counter_inc_form")
+  v_answer_body = panel.find(".v_answer_body") # .panel .v_answer_body のコンテンツを panel-body の直下に移す
+  panel_body = panel.find(".v_question_body")
+  panel_body.html(v_answer_body.html())
+  # answer_logs_create のフォームもついでに submit しておく
+  form = panel.find(".answer_logs_create_form")
   form.submit()
   form.remove() # 一回だけの submit にしたいので form を消す
 
 # 重要チェックボックスをクリックすると即submitを発行する
 # チェックボックスクリック→submitクリックのショートカットに相当する
-$(document).on "click", ".important_flag_form :checkbox", (e) =>
+$(document).on "click", ".mark_update_form :checkbox", (e) =>
   form = $(e.target).parents("form")
   form.submit()
-  # e.preventDefault()
-  # e.stopPropagation()
   e.stopImmediatePropagation()  # 問題の領域をクリックしたことになってしまうのをふせぐため。
-
-# $(document).on "click", ".kotae_display", (e) =>
-#   e.preventDefault()
-#   e.stopPropagation()
-#   e.stopImmediatePropagation()
-#   answerbody = $(e.target).data("answerbody")
-#   $(e.target).html(answerbody)
-#   # alert $(e.target).data("answerbody")
-

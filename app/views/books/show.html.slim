@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong User:
+  = @book.user
+p
+  strong Name:
+  = @book.name
+
+= link_to 'Edit', edit_book_path(@book)
+'|
+= link_to 'Back', books_path
