@@ -6,7 +6,8 @@ RSpec.describe ArticlesController, type: :controller do
     @alice = create(:user)
     sign_in @alice
 
-    @article = create(:article)
+    @book = create(:book, :user => @alice)
+    @article = create(:article, :book => @book)
   end
 
   describe "index" do
