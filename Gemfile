@@ -60,10 +60,4 @@ gem 'kaminari'
 gem 'devise'
 gem 'factory_girl_rails'
 gem 'rails_config'
-
-# group :production do
-#   # Sakura server
-#   # DEBUG [c88ef080] ExecJS::RuntimeUnavailable: Could not find a JavaScript runtime. See https://github.com/rails/execjs for a list of available runtimes.
-#   gem 'execjs'
-#   gem 'therubyracer'
-# end
+gem 'dotenv-rails', :require => 'dotenv/rails-now'

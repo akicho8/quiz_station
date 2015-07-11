@@ -26,6 +26,7 @@ set :deploy_to, proc { "/var/www/#{fetch(:application)}_#{fetch(:stage)}" }
 
 # Default value for :linked_files is []
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
+set :linked_files, fetch(:linked_files, []).push('config/secrets.yml', '.env')
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
@@ -44,14 +45,14 @@ namespace :deploy do
   #     execute :touch, release_path.join('tmp/restart.txt')
   #   end
   # end
-  # 
+  #
   # after :publishing, :restart
 
-# -  after "deploy:assets:precompile", :chmod_R do
-# -    on roles(:web), in: :groups, limit: 3, wait: 10 do
-# -      execute :chmod, "-R ug+w #{fetch(:deploy_to)}"
-# -    end
-# -  end
+  # -  after "deploy:assets:precompile", :chmod_R do
+  # -    on roles(:web), in: :groups, limit: 3, wait: 10 do
+  # -      execute :chmod, "-R ug+w #{fetch(:deploy_to)}"
+  # -    end
+  # -  end
 
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
@@ -59,6 +60,21 @@ namespace :deploy do
       # within release_path do
       #   execute :rake, 'cache:clear'
       # end
+    end
+  end
+
+  # SSHKit.conifg
+  SSHKit.config.command_map[:rake] = 'bundle exec rake'
+
+  desc 'db_seed must be run only one time right after the first deploy'
+  task :db_seed do
+    on roles(:db) do |host|
+      within current_path do
+        with rails_env: fetch(:rails_env) do
+          execute :env
+          execute :rake, 'db:seed'
+        end
+      end
     end
   end
 end
