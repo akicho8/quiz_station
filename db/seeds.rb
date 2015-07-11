@@ -14,6 +14,9 @@ client = DropboxClient.new(ENV["DROPBOX_ACCESS_TOKEN"])
 resp = client.metadata("/resources")
 resp["contents"].each do |content|
   p content["path"]
+  if content["path"] == "/resources/.git"
+    next
+  end
   name = Pathname(content["path"]).basename(".*").to_s
   book = current_user.books.create!(name: name)
   p book
