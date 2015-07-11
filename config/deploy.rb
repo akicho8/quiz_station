@@ -63,15 +63,11 @@ namespace :deploy do
     end
   end
 
-  # SSHKit.conifg
-  SSHKit.config.command_map[:rake] = 'bundle exec rake'
-
   desc 'db_seed must be run only one time right after the first deploy'
   task :db_seed do
     on roles(:db) do |host|
       within current_path do
         with rails_env: fetch(:rails_env) do
-          execute :env
           execute :rake, 'db:seed'
         end
       end
@@ -79,4 +75,4 @@ namespace :deploy do
   end
 end
 
-set :passenger_restart_with_touch, true
+# set :passenger_restart_with_touch, true

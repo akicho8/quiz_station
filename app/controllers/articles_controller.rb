@@ -2,18 +2,20 @@ class ArticlesController < ApplicationController
   before_action :load_object
 
   def index
-    @articles = @book.articles
-    limit = params[:limit] || 100
-    if params[:only_checked]
-      @articles = current_user.marked_articles.order("rand()").take(limit)
-    else
-      # デフォルトでマークしたものは除外していく
-      @articles = @articles.where.not(:id => current_user.marked_articles)
-      # 答えてないもの順にする
-      @articles = @articles.joins("LEFT JOIN answer_logs ON answer_logs.article_id = articles.id AND answer_logs.user_id = #{current_user.id}")
-      @articles = @articles.order("COUNT(answer_logs.id), rand()").group("articles.id")
-      # 件数
-      @articles = @articles.limit(limit)
+    if @book
+      @articles = @book.articles
+      limit = params[:limit] || 100
+      if params[:only_checked]
+        @articles = current_user.marked_articles.order("rand()").take(limit)
+      else
+        # デフォルトでマークしたものは除外していく
+        @articles = @articles.where.not(:id => current_user.marked_articles)
+        # 答えてないもの順にする
+        @articles = @articles.joins("LEFT JOIN answer_logs ON answer_logs.article_id = articles.id AND answer_logs.user_id = #{current_user.id}")
+        @articles = @articles.order("COUNT(answer_logs.id), rand()").group("articles.id")
+        # 件数
+        @articles = @articles.limit(limit)
+      end
     end
   end
 
@@ -91,7 +93,9 @@ class ArticlesController < ApplicationController
       else
         @book = current_user.books.sample
       end
-      @article = @book.articles.new
+      if @book
+        @article = @book.articles.new
+      end
     end
   end
 
