@@ -1,13 +1,15 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :application, "quiz_station"
-set :repo_url, "file://#{Pathname(__FILE__).dirname.dirname.expand_path}"
+set :application, 'quiz_station'
+# set :repo_url, "file://#{Pathname(__FILE__).dirname.dirname.expand_path}"
+set :repo_url, "git@github.com:akicho8/quiz_station.git"
 
 # Default branch is :master
-# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
+# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
+# set :deploy_to, '/var/www/my_app_name'
 set :deploy_to, proc { "/var/www/#{fetch(:application)}_#{fetch(:stage)}" }
 
 # Default value for :scm is :git
@@ -23,10 +25,10 @@ set :deploy_to, proc { "/var/www/#{fetch(:application)}_#{fetch(:stage)}" }
 # set :pty, true
 
 # Default value for :linked_files is []
-# set :linked_files, fetch(:linked_files, []).push('config/database.yml')
+# set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
 
 # Default value for linked_dirs is []
-set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -35,14 +37,21 @@ set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids', 'tmp/ca
 # set :keep_releases, 5
 
 namespace :deploy do
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute :touch, release_path.join('tmp/restart.txt')
-    end
-  end
 
-  after :publishing, :restart
+  # desc 'Restart application'
+  # task :restart do
+  #   on roles(:app), in: :sequence, wait: 5 do
+  #     execute :touch, release_path.join('tmp/restart.txt')
+  #   end
+  # end
+  # 
+  # after :publishing, :restart
+
+# -  after "deploy:assets:precompile", :chmod_R do
+# -    on roles(:web), in: :groups, limit: 3, wait: 10 do
+# -      execute :chmod, "-R ug+w #{fetch(:deploy_to)}"
+# -    end
+# -  end
 
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
@@ -52,10 +61,6 @@ namespace :deploy do
       # end
     end
   end
-
-  after "deploy:assets:precompile", :chmod_R do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      execute :chmod, "-R ug+w #{fetch(:deploy_to)}"
-    end
-  end
 end
+
+set :passenger_restart_with_touch, true

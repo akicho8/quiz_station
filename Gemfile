@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 # Use sqlite3 as the database for Active Record
@@ -43,9 +42,10 @@ group :development, :test do
   gem 'spring'
   gem 'spring-commands-rspec'
 
-  gem 'capistrano'
+  # gem 'capistrano'
   gem 'capistrano-rails'
-  gem 'capistrano-bundler'
+  # gem 'capistrano-bundler'
+  gem 'capistrano-passenger'
   gem 'rspec-rails'
   gem 'test-unit'
 end
@@ -60,3 +60,10 @@ gem 'kaminari'
 gem 'devise'
 gem 'factory_girl_rails'
 gem 'rails_config'
+
+group :production do
+  # Sakura server
+  # DEBUG [c88ef080] ExecJS::RuntimeUnavailable: Could not find a JavaScript runtime. See https://github.com/rails/execjs for a list of available runtimes.
+  # gem 'execjs'
+  # gem 'therubyracer'
+end

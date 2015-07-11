@@ -3,9 +3,11 @@
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
 
-server 'tk2-221-20341.vs.sakura.ne.jp', user: 'deploy', roles: %w{app db web}, my_property: :my_value
-server 'tk2-221-20341.vs.sakura.ne.jp', user: 'deploy', roles: %w{app web}, other_property: :other_value
-server 'tk2-221-20341.vs.sakura.ne.jp', user: 'deploy', roles: %w{db}
+# server 'example.com', user: 'deploy', roles: %w{app db web}, my_property: :my_value
+# server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
+# server 'db.example.com', user: 'deploy', roles: %w{db}
+
+
 
 # role-based syntax
 # ==================
