@@ -21,7 +21,7 @@ html{lang="ja"}
         #navbar.navbar-collapse.collapse
           ul.nav.navbar-nav
             li= link_to("ランダム", polymorphic_path(:articles))
-            li= link_to("チェックのみ", polymorphic_path(:articles, :only_checked => true))
+            li= link_to("チェックのみ", polymorphic_path(:articles, :only_checked => "true"))
             / li= link_to("問題登録", [:new, :article])
             li= link_to("ログイン", :new_user_session)
             li.dropdown

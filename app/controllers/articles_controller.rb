@@ -1,21 +1,19 @@
-# -*- coding: utf-8 -*-
-
 class ArticlesController < ApplicationController
-  before_action :set_book
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :answer_logs_create, :mark_update]
+  before_action :load_object
 
   def index
-    if @book
-      articles = @book.articles
-    else
-      articles = Article.all
-    end
-
+    @articles = @book.articles
     limit = params[:limit] || 100
     if params[:only_checked]
       @articles = current_user.marked_articles.order("rand()").take(limit)
     else
-      @articles = articles.joins("LEFT JOIN answer_logs ON answer_logs.article_id = articles.id AND answer_logs.user_id = #{current_user.id}").order("COUNT(answer_logs.id), rand()").group("articles.id").limit(limit)
+      # デフォルトでマークしたものは除外していく
+      @articles = @articles.where.not(:id => current_user.marked_articles)
+      # 答えてないもの順にする
+      @articles = @articles.joins("LEFT JOIN answer_logs ON answer_logs.article_id = articles.id AND answer_logs.user_id = #{current_user.id}")
+      @articles = @articles.order("COUNT(answer_logs.id), rand()").group("articles.id")
+      # 件数
+      @articles = @articles.limit(limit)
     end
   end
 
@@ -73,7 +71,7 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article.destroy
+    @article.destroy!
     respond_to do |format|
       format.html { redirect_to articles_url }
       format.json { head :no_content }
@@ -82,14 +80,19 @@ class ArticlesController < ApplicationController
 
   private
 
-  def set_book
-    if params[:book_id]
-      @book = Book.find(params[:book_id])
+  def load_object
+    if params[:id]
+      @article = Article.find(params[:id])
+      @book = @article.book
+      raise if @book.user != current_user
+    else
+      if params[:book_id]
+        @book = current_user.books.find(params[:book_id])
+      else
+        @book = current_user.books.sample
+      end
+      @article = @book.articles.new
     end
-  end
-
-  def set_article
-    @article = Article.find(params[:id])
   end
 
   def article_params
