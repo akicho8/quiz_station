@@ -11,7 +11,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -61,9 +61,9 @@ gem 'devise'
 gem 'factory_girl_rails'
 gem 'rails_config'
 
-group :production do
-  # Sakura server
-  # DEBUG [c88ef080] ExecJS::RuntimeUnavailable: Could not find a JavaScript runtime. See https://github.com/rails/execjs for a list of available runtimes.
-  # gem 'execjs'
-  # gem 'therubyracer'
-end
+# group :production do
+#   # Sakura server
+#   # DEBUG [c88ef080] ExecJS::RuntimeUnavailable: Could not find a JavaScript runtime. See https://github.com/rails/execjs for a list of available runtimes.
+#   gem 'execjs'
+#   gem 'therubyracer'
+# end
