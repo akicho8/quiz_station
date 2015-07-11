@@ -23,13 +23,17 @@ html{lang="ja"}
             li= link_to("ランダム", polymorphic_path(:articles))
             li= link_to("チェックのみ", polymorphic_path(:articles, :only_checked => "true"))
             / li= link_to("問題登録", [:new, :article])
-            li= link_to("ログイン", :new_user_session)
+            - if current_user
+              li= link_to("ログイン", :new_user_session)
+            - else
+              li= link_to("ログアウト", :destroy_user_session, :method => :delete)
             li.dropdown
               - caret = content_tag(:span, '', :class => 'caret')
               = link_to("問題選択#{caret}".html_safe, "#", :class => "dropdown-toggle", :data => {:toggle => "dropdown"}, :role => "button", "aria-expanded" => "false")
-              ul.dropdown-menu role="menu"
-                - Book.all.each do |book|
-                  li= link_to(book.name, polymorphic_path(:articles, :book_id => book.id))
+              - if current_user
+                ul.dropdown-menu role="menu"
+                  - current_user.books.all.each do |book|
+                    li= link_to(book.name, polymorphic_path(:articles, :book_id => book.id))
     .container
       #spinner style="display: none"
       - if notice
