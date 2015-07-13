@@ -2,11 +2,13 @@
 lock '3.4.0'
 
 set :application, 'quiz_station'
-# set :repo_url, "file://#{Pathname(__FILE__).dirname.dirname.expand_path}"
-set :repo_url, "git@github.com:akicho8/quiz_station.git"
+
+set :repo_url, "file://#{Pathname(__dir__).dirname}"
+# set :repo_url, "git@github.com:akicho8/quiz_station.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+set :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, '/var/www/my_app_name'
@@ -33,12 +35,26 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
+# set :default_env, { path: "/usr/local/rbenv/shims:/usr/local/rbenv/bin:$PATH" }
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-namespace :deploy do
+# # config/deploy.rb
+# set :rbenv_type, :system # or :system, depends on your rbenv setup
+# set :rbenv_ruby, '2.2.2'
+# set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+# set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+# set :rbenv_roles, :all # default value
 
+desc 'env'
+task :env do
+  on roles(:app) do
+    execute :env
+  end
+end
+
+namespace :deploy do
   # desc 'Restart application'
   # task :restart do
   #   on roles(:app), in: :sequence, wait: 5 do

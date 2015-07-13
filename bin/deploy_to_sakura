@@ -1,3 +1,2 @@
 #!/bin/sh
-cap production deploy
-cap production deploy:db_seed
+cap production deploy deploy:db_seed
