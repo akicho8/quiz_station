@@ -1,15 +1,23 @@
 doctype 5
 html{lang="ja"}
   head
-    meta{charset="UTF-8"}
+    meta charset="UTF-8"
+    meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"
     = favicon_link_tag
     = csrf_meta_tag
-    = stylesheet_link_tag :application
-    = content_tag(:title, html_title)
-    meta{name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no"}
+    meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no"
+    title= content_for?(:title) ? yield(:title) : "QuizStation"
+
+    = stylesheet_link_tag "application", :media => "all"
+    = favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144'
+    = favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114'
+    = favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72'
+    = favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png'
+    = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
+
   body
     #spinner
-    nav.navbar.navbar-default
+    nav.navbar.navbar-default.navbar-static-top
       .container
         .navbar-header
           button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"
@@ -36,16 +44,10 @@ html{lang="ja"}
                     li= link_to(book.name, polymorphic_path(:articles, :book_id => book.id))
     .container
       #spinner style="display: none"
-      - if notice
-        p#notice
-          = notice
-      - if alert
-        p#alert
-          = alert
-
+      = bootstrap_flash
       = yield
     / footer.footer
     /   .container
     /     p
     /       = "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"
-    = javascript_include_tag(:application)
+    = javascript_include_tag "application"

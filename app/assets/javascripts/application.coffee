@@ -12,8 +12,7 @@
 #
 #= require jquery
 #= require jquery_ujs
-#  require turbolinks
-#= require bootstrap.min
+#= require twitter/bootstrap
 #= require_tree .
 
 # AJAX動作確認用

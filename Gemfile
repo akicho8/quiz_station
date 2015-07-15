@@ -50,7 +50,7 @@ group :development, :test do
   gem 'test-unit'
 end
 
-gem 'bootstrap3_rails'
+gem 'twitter-bootstrap-rails'
 gem 'slim-rails'
 gem 'acts-as-taggable-on'
 gem 'rails_autolink'
