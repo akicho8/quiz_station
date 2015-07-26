@@ -17,6 +17,9 @@ resp["contents"].each do |content|
   if content["path"] == "/resources/.git"
     next
   end
+  if content["path"].match(/エンコードの競合/)
+    next
+  end
   name = Pathname(content["path"]).basename(".*").to_s
   book = current_user.books.create!(name: name)
   p book
