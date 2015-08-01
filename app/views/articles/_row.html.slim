@@ -11,5 +11,5 @@
               = " "
           .col-xs-10
             span.v_question_body
-              = article.v_question_body
+              = article.v_question_body(session[:difficult_level_key])
         = content_tag(:div, article.v_answer_body, :style => "display:none", :class => "v_answer_body")

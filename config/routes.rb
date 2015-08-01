@@ -1,16 +1,16 @@
 Rails.application.routes.draw do
-  resources :answer_logs
-  resources :important_marks
-  get 'home/index'
+  get "homes/show"
 
   devise_for :users
+
   resources :books
+  resources :answer_logs
+  resources :important_marks
   resources :articles do
     patch :answer_logs_create, :on => :member
     patch :mark_update, :on => :member
   end
+  put "difficult_level_update" => "homes#difficult_level_update"
 
-  # root "articles#index"
-
-  root to: "articles#index"
+  root "articles#index"
 end

@@ -35,13 +35,22 @@ html{lang="ja"}
               li= link_to("ログアウト", :destroy_user_session, :method => :delete)
             - else
               li= link_to("ログイン", :new_user_session)
+            - caret = content_tag(:span, '', :class => 'caret')
             li.dropdown
-              - caret = content_tag(:span, '', :class => 'caret')
               = link_to("問題選択#{caret}".html_safe, "#", :class => "dropdown-toggle", :data => {:toggle => "dropdown"}, :role => "button", "aria-expanded" => "false")
               - if current_user
                 ul.dropdown-menu role="menu"
                   - current_user.books.all.each do |book|
                     li= link_to(book.name, polymorphic_path(:articles, :book_id => book.id))
+            li.dropdown
+              = link_to("難易度#{caret}".html_safe, "#", :class => "dropdown-toggle", :data => {:toggle => "dropdown"}, :role => "button", "aria-expanded" => "false")
+              - if current_user
+                ul.dropdown-menu role="menu"
+                  - DifficultLevelInfo.each do |record|
+                    - mark = ""
+                    - if session[:difficult_level_key] == record.key.to_s
+                      - mark = "*"
+                    li= link_to("#{mark}#{record.name}", difficult_level_update_path(:key => record.key), :method => :put)
     .container
       #spinner style="display: none"
       = bootstrap_flash

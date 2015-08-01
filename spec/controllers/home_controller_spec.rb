@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe HomeController, type: :controller do
+RSpec.describe HomesController, type: :controller do
   before do
     sign_in create(:user)
   end

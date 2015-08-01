@@ -7,8 +7,7 @@ class ApplicationController < ActionController::Base
 
   if Rails.env.production?
     if v = ENV["HTTP_BASIC_AUTHENTICATE"].presence
-      name, password = v.split(/:/)
-      http_basic_authenticate_with name: name, password: password
+      http_basic_authenticate_with Hash[[:name, :password].zip(v.split(/:/))]
     end
     # before_action do
     #   authenticate_or_request_with_http_basic do |name, password|

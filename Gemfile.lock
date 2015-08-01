@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/akicho8/static_record.git
+  revision: 2f3fb0c67657c3d6867b381fd595005b9ecd5a14
+  specs:
+    static_record (0.0.13)
+      activemodel
+      activesupport
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -266,6 +274,7 @@ DEPENDENCIES
   slim-rails
   spring
   spring-commands-rspec
+  static_record!
   test-unit
   therubyracer
   turbolinks

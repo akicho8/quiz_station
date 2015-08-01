@@ -28,7 +28,7 @@ set :deploy_to, proc { "/var/www/#{fetch(:application)}_#{fetch(:stage)}" }
 
 # Default value for :linked_files is []
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
-set :linked_files, fetch(:linked_files, []).push('config/secrets.yml', '.env')
+# set :linked_files, fetch(:linked_files, []).push('config/secrets.yml', '.env')
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
@@ -89,6 +89,27 @@ namespace :deploy do
       end
     end
   end
+
+  task :app_clean do
+    on roles :all do
+      execute :rm, '-rf', deploy_to
+      # execute :rake, "db:create"
+    end
+  end
+  before 'deploy:starting', 'deploy:app_clean'
+
+  # desc 'Runs rake db:migrate if migrations are set'
+  task :db_create => [:set_rails_env] do
+    on primary fetch(:migration_role) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, "db:drop"
+          execute :rake, "db:create"
+        end
+      end
+    end
+  end
+  before 'deploy:migrate', 'deploy:db_create'
 end
 
 # set :passenger_restart_with_touch, true

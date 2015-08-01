@@ -57,6 +57,7 @@ gem 'acts-as-taggable-on'
 gem 'rails_autolink'
 gem 'dropbox-sdk', :require => false
 gem 'kaminari'
+gem 'static_record', :github => "akicho8/static_record"
 
 gem 'devise'
 gem 'factory_girl_rails'
