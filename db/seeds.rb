@@ -20,15 +20,30 @@ resp["contents"].each do |content|
   if content["path"].match(/エンコードの競合/)
     next
   end
-  name = Pathname(content["path"]).basename(".*").to_s
-  book = current_user.books.create!(name: name)
-  p book
+  path = Pathname(content["path"])
+  basename = path.basename(".*").to_s
+  subject = basename
   str = client.get_file(content["path"]).toutf8
+  if md = str.match(/\bTitle:\s*(.*)/)
+    subject = md.captures.first
+  end
+
   str = str.gsub(/#.*/, "")
-  records = CSV.parse(str, headers: :first_row, header_converters: :symbol, skip_blanks: true, converters: :numeric).collect(&:to_hash)
+  if path.extname == ".csv"
+    records = CSV.parse(str, headers: :first_row, header_converters: :symbol, skip_blanks: true, converters: :numeric).collect(&:to_hash)
+  else
+    records = str.lines.collect { |e|
+      e = e.strip
+      if e.present?
+        {:question_body => e}
+      end
+    }.compact
+  end
   if Rails.env.development?
     records = records.take(3)
   end
+
+  book = current_user.books.create!(name: subject)
   records.each do |attrs|
     if attrs[:question_body].present?
       article = book.articles.build(question_body: attrs[:question_body])
