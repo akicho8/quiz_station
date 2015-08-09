@@ -1,0 +1,15 @@
+= form_for @hide_mark do |f|
+  - if @hide_mark.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@hide_mark.errors.count, "error")} prohibited this hide_mark from being saved:"
+      ul
+        - @hide_mark.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :user
+    = f.text_field :user
+  .field
+    = f.label :article
+    = f.text_field :article
+  .actions = f.submit

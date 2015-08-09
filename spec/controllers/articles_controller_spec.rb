@@ -28,7 +28,7 @@ RSpec.describe ArticlesController, type: :controller do
 
   describe "mark_update" do
     it "on" do
-      patch :mark_update, :id => @article.id, :important_flag => "true"
+      patch :mark_update, :id => @article.id, :hide_flag => "true"
       assert_response :success
       @alice.marked_articles.include?(@article).should == true
     end

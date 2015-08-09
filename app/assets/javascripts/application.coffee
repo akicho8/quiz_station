@@ -37,9 +37,26 @@ $(document).on "click", ".panel-body", (e) ->
   form.submit()
   form.remove() # 一回だけの submit にしたいので form を消す
 
-# 重要チェックボックスをクリックすると即submitを発行する
+# 非表示チェックボックスをクリックすると即submitを発行する
 # チェックボックスクリック→submitクリックのショートカットに相当する
 $(document).on "click", ".mark_update_form :checkbox", (e) =>
   form = $(e.target).parents("form")
   form.submit()
   e.stopImmediatePropagation()  # 問題の領域をクリックしたことになってしまうのをふせぐため。
+
+  # 背景を変更するだけ
+  if true
+    panel = $(e.target).parents(".panel")
+    if form.find("input:checkbox").is(":checked")
+      # style = {backgroundColor: "#eee"}
+      panel.addClass("panel_checked")
+    else
+      # style = {backgroundColor: "#fff"}
+      # panel.css(style)
+      panel.removeClass("panel_checked")
+
+  # 消したい場合
+  if false
+    if form.find("input:checkbox").is(":checked")
+      div = $(e.target).parents(".panel").parents(".row")
+      div.remove()

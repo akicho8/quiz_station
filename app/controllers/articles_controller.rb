@@ -25,7 +25,7 @@ class ArticlesController < ApplicationController
   end
 
   def mark_update
-    if params[:important_flag]
+    if params[:hide_flag]
       unless current_user.marked_articles.include?(@article)
         current_user.marked_articles << @article
       end

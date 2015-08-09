@@ -1,4 +1,4 @@
-class ImportantMark < ActiveRecord::Base
+class HideMark < ActiveRecord::Base
   belongs_to :user
   belongs_to :article
 

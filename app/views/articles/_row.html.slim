@@ -1,15 +1,18 @@
+- hide_flag = current_user.marked_articles.include?(article)
+
 .row
   .col-xs-12
-    .panel.panel-default
+    .panel.panel-default class=(hide_flag ? 'panel_checked' : '')
       = form_for(article, :url => polymorphic_path([:answer_logs_create, article]), :remote => true, :html => {:class => "answer_logs_create_form"}) do |form|
         = ""
-      = content_tag(:div, :class => "panel-body") do
+      .panel-body
         .row
           .col-xs-2
             = form_for(article, :url => polymorphic_path([:mark_update, article]), :remote => true, :html => {:class => "mark_update_form"}) do |form|
-              = check_box_tag(:important_flag, "true", current_user.marked_articles.include?(article))
+              = check_box_tag(:hide_flag, "true", hide_flag)
               = " "
           .col-xs-10
             span.v_question_body
               = article.v_question_body(session[:difficult_level_key])
-        = content_tag(:div, article.v_answer_body, :style => "display:none", :class => "v_answer_body")
+        .v_answer_body style="display:none"
+          = article.v_answer_body

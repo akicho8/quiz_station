@@ -42,15 +42,15 @@ ActiveRecord::Schema.define(version: 20150615032016) do
   add_index "books", ["name"], name: "index_books_on_name", using: :btree
   add_index "books", ["user_id"], name: "index_books_on_user_id", using: :btree
 
-  create_table "important_marks", force: :cascade do |t|
+  create_table "hide_marks", force: :cascade do |t|
     t.integer  "user_id",    limit: 4, null: false
     t.integer  "article_id", limit: 4, null: false
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end
 
-  add_index "important_marks", ["article_id"], name: "index_important_marks_on_article_id", using: :btree
-  add_index "important_marks", ["user_id"], name: "index_important_marks_on_user_id", using: :btree
+  add_index "hide_marks", ["article_id"], name: "index_hide_marks_on_article_id", using: :btree
+  add_index "hide_marks", ["user_id"], name: "index_hide_marks_on_user_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id",        limit: 4

@@ -1,0 +1,23 @@
+h1 Listing hide_marks
+
+table
+  thead
+    tr
+      th User
+      th Article
+      th
+      th
+      th
+
+  tbody
+    - @hide_marks.each do |hide_mark|
+      tr
+        td = hide_mark.user
+        td = hide_mark.article
+        td = link_to 'Show', hide_mark
+        td = link_to 'Edit', edit_hide_mark_path(hide_mark)
+        td = link_to 'Destroy', hide_mark, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New HideMark', new_hide_mark_path

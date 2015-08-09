@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong User:
+  = @hide_mark.user
+p
+  strong Article:
+  = @hide_mark.article
+
+= link_to 'Edit', edit_hide_mark_path(@hide_mark)
+'|
+= link_to 'Back', hide_marks_path
