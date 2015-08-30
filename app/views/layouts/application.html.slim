@@ -28,13 +28,13 @@ html{lang="ja"}
           = link_to(AppConfig[:app_name] + omake, :root, class: "navbar-brand")
         #navbar.navbar-collapse.collapse
           ul.nav.navbar-nav
-            li= link_to("ランダム", polymorphic_path(:articles))
-            li= link_to("チェックのみ", polymorphic_path(:articles, :only_checked => "true"))
+            / li= link_to("ランダム", polymorphic_path(:articles))
+            / li= link_to("チェックのみ", polymorphic_path(:articles, :only_checked => "true"))
             / li= link_to("問題登録", [:new, :article])
-            - if current_user
-              li= link_to("ログアウト", :destroy_user_session, :method => :delete)
-            - else
-              li= link_to("ログイン", :new_user_session)
+            / - if current_user
+            /   li= link_to("ログアウト", :destroy_user_session, :method => :delete)
+            / - else
+            /   li= link_to("ログイン", :new_user_session)
             - caret = content_tag(:span, '', :class => 'caret')
             li.dropdown
               = link_to("問題選択#{caret}".html_safe, "#", :class => "dropdown-toggle", :data => {:toggle => "dropdown"}, :role => "button", "aria-expanded" => "false")
