@@ -14,11 +14,11 @@ class Article < ActiveRecord::Base
     true
   end
 
-  with_options(presence: true) do |o|
-    o.validates :question_body
+  with_options(presence: true) do
+    validates :question_body
   end
-  with_options(allow_blank: true) do |o|
-    o.validates :question_body, uniqueness: {scope: :book_id}
+  with_options(allow_blank: true) do
+    validates :question_body, uniqueness: {scope: :book_id}
   end
 
   def v_question_body(difficult_level_key)
@@ -27,9 +27,6 @@ class Article < ActiveRecord::Base
       chars = str.chars
       chars = chars[1..-2]
       chars = difficult_level_info.chars_shadow.call(chars)
-      # # str = [chars.first, "？" * (chars.size - 1)].join
-      # # str = "？" * chars.size
-      # str = chars_shadow(chars.join, 2)
       "<span class='question_strong'>#{chars.join}</span>"
     }.html_safe
   end
@@ -42,19 +39,4 @@ class Article < ActiveRecord::Base
       "<span class='answer_strong'>#{str}</span>"
     }.html_safe
   end
-
-  # private
-  # 
-  # # str を全部 "？" にして、 hint 個数だけを見せる
-  # def chars_shadow(str, hint)
-  #   chars = str.chars
-  #   i = rand(chars.size)
-  #   a = Array.new(chars.size, "？")
-  #   if hint > chars.size - 1
-  #     hint = chars.size - 1
-  #   end
-  #   indexes = (0...a.size).to_a.sample(hint)
-  #   indexes.each {|i| a[i] = chars[i] }
-  #   a.join
-  # end
 end
